@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_page_properties_footers",
+  "info": {
+    "displayName": "footer",
+    "icon": "message"
+  },
+  "options": {},
+  "attributes": {
+    "youtubeLink": {
+      "type": "string"
+    },
+    "instagramLink": {
+      "type": "string"
+    },
+    "facebookLink": {
+      "type": "string"
+    },
+    "linkedInLink": {
+      "type": "string"
+    },
+    "twitterLink": {
+      "type": "string"
+    },
+    "tiktokLink": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

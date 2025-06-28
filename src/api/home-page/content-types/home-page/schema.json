@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "home_pages",
+  "info": {
+    "singularName": "home-page",
+    "pluralName": "home-pages",
+    "displayName": "homePage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "shop": {
+      "type": "string"
+    },
+    "headerIcon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "homeBanner": {
+      "type": "component",
+      "component": "page-properties.banner",
+      "repeatable": true
+    },
+    "socialMediaLinks": {
+      "type": "component",
+      "component": "page-properties.footer",
+      "repeatable": false
+    }
+  }
+}

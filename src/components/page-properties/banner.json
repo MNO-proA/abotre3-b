@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_page_properties_banners",
+  "info": {
+    "displayName": "banner",
+    "icon": "picture"
+  },
+  "options": {},
+  "attributes": {
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "buttonOneLabel": {
+      "type": "string"
+    },
+    "buttonOneLink": {
+      "type": "string"
+    },
+    "buttonTwoLabel": {
+      "type": "string"
+    },
+    "buttonTwoLink": {
+      "type": "string"
+    },
+    "showContent": {
+      "type": "boolean"
+    }
+  },
+  "config": {}
+}
