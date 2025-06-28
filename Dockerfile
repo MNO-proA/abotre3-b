@@ -28,9 +28,6 @@ WORKDIR /opt/app
 # Copy everything including node_modules and build
 COPY --from=build /opt/app .
 
-# Do NOT prune here — needed types will be removed
-# RUN npm prune --omit=dev  ← leave this out for now
-
 RUN chown -R node:node /opt/app
 USER node
 
