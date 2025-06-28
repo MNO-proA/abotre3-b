@@ -3,21 +3,25 @@ name: Publish to GHCR
 on:
   push:
     branches:
-      - main         # For latest branch builds
-    tags:
-      - "v*"         # For tagged semantic versions like v1.0.0
+      - main         # Only main
+    # You can add tag trigger later if needed
 
 jobs:
   push-image:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=ref,event=branch
+            type=sha
+            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Log in to GHCR
         uses: docker/login-action@v2
@@ -26,23 +30,116 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels)
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: ghcr.io/${{ github.repository }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=tag
-            type=sha
-
-      - name: Build and push Docker image
+      - name: Build & Push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+
+
+
+
+
+
+# name: Publish to GHCR
+
+# on:
+#   workflow_dispatch:  # ← manual trigger only
+
+# jobs:
+#   push-image:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v3
+
+#       - name: Extract metadata (tags, labels)
+#         id: meta
+#         uses: docker/metadata-action@v5
+#         with:
+#           images: ghcr.io/${{ github.repository }}
+#           tags: |
+#             type=ref,event=branch
+#             type=sha
+#             type=raw,value=latest,enable={{is_default_branch}}
+
+#       - name: Log in to GHCR
+#         uses: docker/login-action@v2
+#         with:
+#           registry: ghcr.io
+#           username: ${{ github.actor }}
+#           password: ${{ secrets.GITHUB_TOKEN }}
+
+#       - name: Build & push
+#         uses: docker/build-push-action@v4
+#         with:
+#           context: .
+#           push: true
+#           tags: ${{ steps.meta.outputs.tags }}
+#           labels: ${{ steps.meta.outputs.labels }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# name: Publish to GHCR
+
+# on:
+#   push:
+#     branches:
+#       - main         # For latest branch builds
+#     tags:
+#       - "v*"         # For tagged semantic versions like v1.0.0
+
+# jobs:
+#   push-image:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: read
+#       packages: write
+#       id-token: write
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+
+#       - name: Log in to GHCR
+#         uses: docker/login-action@v2
+#         with:
+#           registry: ghcr.io
+#           username: ${{ github.actor }}
+#           password: ${{ secrets.GITHUB_TOKEN }}
+
+#       - name: Extract metadata (tags, labels)
+#         id: meta
+#         uses: docker/metadata-action@v3
+#         with:
+#           images: ghcr.io/${{ github.repository }}
+#           tags: |
+#             type=ref,event=branch
+#             type=ref,event=tag
+#             type=sha
+
+#       - name: Build and push Docker image
+#         uses: docker/build-push-action@v4
+#         with:
+#           context: .
+#           push: true
+#           tags: ${{ steps.meta.outputs.tags }}
+#           labels: ${{ steps.meta.outputs.labels }}
 
       # Optional Coolify trigger (uncomment to use)
       # - name: Notify Coolify
@@ -65,3 +162,21 @@ jobs:
 
 # image: ghcr.io/qodexcore/strapi-backend:main       # from a main branch push
 # image: ghcr.io/qodexcore/strapi-backend:1.0.0      # from a v1.0.0 tag push
+
+
+
+# 🔁 Want to update code AND tag?
+# Make changes on main
+
+# Commit:
+# git add .
+# git commit -m "Fix X"
+
+# Push:
+# git push origin main
+
+# Tag the new commit:
+# git tag v1.0.1
+# git push origin v1.0.1
+# Now both commits are in GitHub and images are built for main and v1.0.1.
+
