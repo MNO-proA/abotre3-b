@@ -144,7 +144,7 @@ CMD ["npm", "run", "start"]
 # # Push to GitHub Container Registry (requires login first)
 # docker push ghcr.io/your-org/your-app:latest
 
-# Dockerfile.dev===============================================================>
+# Dockerfile.dev=================================================>
 # FROM node:22-alpine
 # # Installing libvips-dev for sharp Compatibility
 # RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
